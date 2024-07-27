@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import connectDB from "./utils/db.js";
+import router from "./routes/userRoute.js"
+
 const app = express();
 dotenv.config();
 // console.log(process.env.MONGO_URI)
@@ -17,17 +19,12 @@ const coreOptions = {
   origin: "http://localhost:5173",
   credentials: true,
 };
+console.log(router)
 app.use(cors(coreOptions));
-
-app.get("/", (req, res) => {
-  return res.status(200).json({
-    message: "Coming from backend",
-    success: true,
-  });
-});
+app.use("/",router)
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   connectDB();
-  console.log(`Server is listening on port ${port}`);
+  console.log(`App is listening on port ${port}`);
 });
