@@ -46,6 +46,7 @@ export const login = async (req, res) => {
       });
     }
     let user = await User.findOne({ email });
+    console.log(user)
     if (!user) {
       res.status(400).json({
         message: "Incorrect e-mail",
@@ -112,24 +113,23 @@ export const logOut = (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullName, email, phoneNumber, bio, skills } = req.body;
-    const file=req.file
-    if (!fullName || !email || !phoneNumber || !bio || !skills) {
-      return res.status(400).json({
-        message: "Something is missing",
-        success: false,
-      });
+    const file = req.file;
+
+    let skillsArray;
+    if (skills) {
+      skillsArray = skills.split(",");
     }
-    const skillsArray = skills.split(",");
     const userId = req.id;
     let user = await User.findById(userId);
+    console.log(user)
 
-    user.fullName = fullName;
-    user.email = email;
-    user.phoneNumber = phoneNumber;
-    user.profile.bio = bio;
-    user.profile.skills = skillsArray;
+    if (fullName) user.fullName = fullName;
+    if (email) user.email = email;
+    if (phoneNumber) user.phoneNumber = phoneNumber;
+    if (bio) user.profile.bio = bio;
+    if (skills) user.profile.skills = skillsArray;
 
-    await user.save()
+    await user.save();
     user = {
       _id: user._id,
       fullName: user.fullName,
@@ -145,5 +145,31 @@ export const updateProfile = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getUserByName = async (req, res) => {
+  try {
+    const { name } = req.params;
+    const user = await User.findOne({ fullName: name });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        success: false,
+      });
+    }
+
+    return res.status(200).json({
+      message: "User found",
+      user,
+      success: true,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
   }
 };
