@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
-const Schema = mongoose.Schema;
+// const Schema = mongoose.Schema;
 
-const companySchema = new Schema(
+const companySchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
+      unique:true,
     },
     description: {
       type: String,
@@ -15,13 +16,13 @@ const companySchema = new Schema(
     },
     location: {
       type: String,
-      required: true,
+      // required: true,
     },
     logo: {
       type: String,
     },
     userId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
