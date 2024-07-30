@@ -20,6 +20,10 @@ const jobSchema = new Schema(
       type: Number,
       required: true,
     },
+    experienceLevel: {
+      type: Number,
+      required: true,
+    },
     location: {
       type: String,
       required: true,
@@ -28,7 +32,7 @@ const jobSchema = new Schema(
       type: String,
       required: true,
     },
-    posistion: {
+    position: {
       type: Number,
       required: true,
     },
