@@ -5,13 +5,12 @@ import { registerCompany,getCompany, getCompanyById, updateCompany } from './con
 import { postJob, getAllJobs, getJobById, getAdminJobs } from "./controllers/job.controller.js";
 import isAuthenticated from './middlewares/isAuthenticated.js';
 import { applyJob, getApplicants, getAppliedJobs, updateStatus } from "./controllers/application.controller.js";
+import { singleUpload } from "./middlewares/multer.js";
 
 const router = Router();
-const app=express()
-// app.use(isAuthenticated)
 
 // -----------------------------User-------------------------------
-router.post("/register", register)
+router.post("/register",singleUpload, register)
 router.post("/login", login)
 router.post("/logout", logOut)
 router.put("/profile/update", isAuthenticated, updateProfile)
