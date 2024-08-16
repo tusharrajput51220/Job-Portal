@@ -8,6 +8,8 @@ import React, { useState } from "react";
 import { BASEURL } from "@/utils/constant";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
 
 function Signup() {
   const [input, setInput] = useState({
@@ -19,6 +21,8 @@ function Signup() {
     file: "",
   });
   const router=useRouter()
+  const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
   const changeEvent = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -29,6 +33,7 @@ function Signup() {
     e.preventDefault();
     // console.log(input)
     try {
+      dispatch(setLoading(true))
       let data = await fetch(`${BASEURL}register`, {
         method: "POST",
         body: JSON.stringify(input),
@@ -41,6 +46,8 @@ function Signup() {
       router.push("/")
     } catch (err) {
       console.log(err);
+    }finally{
+      dispatch(setLoading(false))
     }
   };
 
@@ -127,9 +134,16 @@ function Signup() {
             />
           </div>
         </div>
-        <Button type="submit" className="w-full my-4">
-          Signup
-        </Button>
+        {loading ? (
+          <Button className="w-full my-4">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Wait...
+          </Button>
+        ) : (
+          <Button type="submit" className="w-full my-4">
+            Signup
+          </Button>
+        )}
         <span className="text-sm">
           Already have an account?{" "}
           <Link href="/login" className="underline text-blue-500">

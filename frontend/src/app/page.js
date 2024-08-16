@@ -1,11 +1,18 @@
-import Navbar from "@/components/shared/Navbar";
-import { Toaster } from "sonner";
+import CategoryCarousel from '@/components/CategoryCarousel'
+import Footer from '@/components/shared/Footer'
+import HeroSection from '@/components/HeroSection'
+import LatestJobs from '@/components/LatestJobs'
+import React from 'react'
 
-export default function Home() {
+function page() {
   return (
     <div>
-      {/* <Navbar /> */}
-      {/* <Toaster /> */}
+      <HeroSection />
+      <CategoryCarousel />
+      <LatestJobs />
+      <Footer />
     </div>
-  );
+  )
 }
+
+export default page

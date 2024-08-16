@@ -18,10 +18,10 @@ function Navbar() {
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
             <li>
-              <Link href="">Home</Link>
+              <Link href="/">Home</Link>
             </li>
             <li>
-              <Link href="">Jobs</Link>
+              <Link href="/jobs">Jobs</Link>
             </li>
             <li>
               <Link href="">Browse</Link>
@@ -30,7 +30,7 @@ function Navbar() {
           {!user ? (
             <div className="flex items-center gap-2">
               <Link href="/login"><Button variant="outline">Login</Button></Link>
-              <Link href="/signup"><Button>Signup</Button></Link>
+              <Link href="/signup"><Button className="bg-[#7209b7]">Signup</Button></Link>
             </div>
           ) : (
             <Popover>

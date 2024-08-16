@@ -8,6 +8,9 @@ import React, { useState } from "react";
 import { BASEURL } from "@/utils/constant";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader2 } from "lucide-react";
+import { setLoading } from "@/redux/authSlice";
 
 function Login() {
   const [input, setInput] = useState({
@@ -15,14 +18,17 @@ function Login() {
     password: "",
     role: "",
   });
-  const router=useRouter()
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
   const changeEvent = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-  const submitHandler =async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     // console.log(input);
     try {
+      dispatch(setLoading(true));
       let data = await fetch(`${BASEURL}login`, {
         method: "POST",
         body: JSON.stringify(input),
@@ -30,11 +36,13 @@ function Login() {
           "Content-Type": "application/json",
         },
       });
-      data=await data.json()
-      toast.success(data.message)
-      router.push("/")
+      data = await data.json();
+      toast.success(data.message);
+      router.push("/");
     } catch (err) {
       console.log(err);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -94,9 +102,16 @@ function Login() {
             </div>
           </RadioGroup>
         </div>
-        <Button type="submit" className="w-full my-4">
-          Login
-        </Button>
+        {loading ? (
+          <Button className="w-full my-4">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Wait...
+          </Button>
+        ) : (
+          <Button type="submit" className="w-full my-4">
+            Login
+          </Button>
+        )}
         <span className="text-sm">
           Don't have an account?{" "}
           <Link href="/signup" className="underline text-blue-500">
