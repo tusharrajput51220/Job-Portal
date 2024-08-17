@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader2 } from "lucide-react";
-import { setLoading } from "@/redux/authSlice";
+import { setLoading, setUser } from "@/redux/authSlice";
 
 function Login() {
   const [input, setInput] = useState({
@@ -38,6 +38,7 @@ function Login() {
       });
       data = await data.json();
       toast.success(data.message);
+      dispatch(setUser(data.user))
       router.push("/");
     } catch (err) {
       console.log(err);
