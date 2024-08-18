@@ -14,6 +14,7 @@ import { Loader2 } from "lucide-react";
 import { BASEURL } from "@/utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/authSlice";
+import { toast } from "sonner";
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
   const [loading, setLoading] = useState(false);
@@ -39,22 +40,46 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData();
     console.log(input);
+    formData.append("fullName", input.fullName);
+    formData.append("email", input.email);
+    formData.append("phoneNumber", input.phoneNumber);
+    formData.append("bio", input.bio);
+    formData.append("skills", input.skills);
+    if (input.file) {
+      formData.append("file", input.file);
+    }
+    console.log(formData);
 
     try {
-      let data = await fetch(`${BASEURL}profile/update`, {
-        method: "Put",
-        body: JSON.stringify(input),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      data = await data.json();
-      dispatch(data.user);
-      toast.success(data.message);
-      setOpen(false);
+      const response = await fetch(
+        `http://localhost:8000/api/v1/profile/update`,
+        {
+          method: "PUT",
+          // body: formData,
+          body: JSON.stringify(input),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(setUser(data.user));
+        toast.success(data.message);
+        setOpen(false);
+      } else {
+        toast.error(data.message || "Failed to update profile");
+      }
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      toast.error("An error occurred while updating profile");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -150,7 +175,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 Wait...
               </Button>
             ) : (
-              <Button type="submit" className="w-full my-4" onClick={submitHandler}>
+              <Button
+                type="submit"
+                className="w-full my-4"
+                onClick={submitHandler}
+              >
                 Update
               </Button>
             )}

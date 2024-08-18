@@ -7,12 +7,14 @@ import { Label } from "@/components/ui/label";
 import UpdateProfileDialog from "@/components/UpdateProfileDialog";
 import { Contact, Mail, Pen } from "lucide-react";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const page = () => {
   const [open, setOpen]=useState(false)
 
-  const skills = ["Html", "Css", "Javascript", "RaectJs", "NextJs"];
   const isResume=true
+  const user=useSelector(store=>store.auth.user)
+  console.log(user)
 
   return (
     <div>
@@ -23,11 +25,8 @@ const page = () => {
               <AvatarImage src="https://th.bing.com/th/id/OIP.GN1-R3cCXf-sQcQF6Zkt8AHaHa?w=165&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" />
             </Avatar>
             <div>
-              <h1 className="font-medium text-xl">Full Name</h1>
-              <p>
-                Lorem Lorem Lorem v Lorem v Lorem Lorem Lorem Lorem Lorem Lorem
-                Lorem v v v Lorem Lorem Lorem Lorem
-              </p>
+              <h1 className="font-medium text-xl">{user?.fullName}</h1>
+              <p>{user?.profile?.bio}</p>
             </div>
           </div>
           <Button className="text-right" variant="outline" onClick={() => setOpen(true)}>
@@ -37,18 +36,18 @@ const page = () => {
         <div className="my-5">
           <div className="flex items-center gap-3 my-2">
             <Mail />
-            <span>tushar@demo.com</span>
+            <span>{user?.email}</span>
           </div>
           <div className="flex items-center gap-3 my-2">
             <Contact />
-            <span>8976578476</span>
+            <span>{user?.phoneNumber}</span>
           </div>
         </div>
         <div className="my-5">
           <h1>Skills</h1>
           <div className="flex items-center gap-1">
-            {skills.length > 0 ? (
-              skills.map((item, index) => <Badge key={index}>{item}</Badge>)
+            {user?.profile?.skills?.length > 0 ? (
+              user.profile.skills.map((item, index) => <Badge key={index}>{item}</Badge>)
             ) : (
               <span>NA</span>
             )}

@@ -47,56 +47,58 @@ export const login = async (req, res) => {
       });
     }
     let user = await User.findOne({ email });
-    // console.log(user)
     if (!user) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Incorrect e-mail",
         success: false,
       });
     }
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Incorrect password",
         success: false,
       });
     }
-    if (role != user.role) {
-      res.status(400).json({
-        message: "Account doesn't exists with current role",
+    if (role !== user.role) {
+      return res.status(400).json({
+        message: "Account doesn't exist with the current role",
         success: false,
       });
     }
-    const tokenData = {
-      userId: user._id,
-    };
-    const token = await jwt.sign(tokenData, process.env.SECRET_KEY, {
+    const tokenData = { userId: user._id };
+    const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
       expiresIn: "1d",
     });
 
-    user = {
-      _id: user._id,
-      fullName: user.fullName,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      role: user.role,
-      profile: user.profile,
+    const cookieOptions = {
+      maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
     };
 
-    return res
+    res
       .status(200)
-      .cookie("token", token, {
-        maxAge: 1 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: "strict",
-      })
+      .cookie("token", token, cookieOptions)
       .json({
         message: `Welcome back ${user.fullName}`,
-        user,
+        user: {
+          _id: user._id,
+          fullName: user.fullName,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          role: user.role,
+          profile: user.profile,
+        },
         success: true,
       });
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    res.status(500).json({
+      message: "Server error",
+      success: false,
+    });
   }
 };
 
@@ -122,7 +124,7 @@ export const updateProfile = async (req, res) => {
     }
     const userId = req.id;
     let user = await User.findById(userId);
-    console.log(user)
+    // console.log(user)
 
     if (fullName) user.fullName = fullName;
     if (email) user.email = email;

@@ -35,6 +35,7 @@ function Login() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       });
       data = await data.json();
       toast.success(data.message);

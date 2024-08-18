@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "@/redux/store";
 import Navbar from "@/components/shared/Navbar";
 import { Toaster } from "sonner";
+import ReduxProvider from "@/redux/redux-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider store={store}><Navbar /> {children} <Toaster /></Provider>
+        <ReduxProvider store={store}><Navbar /> {children} <Toaster /></ReduxProvider>
       </body>
     </html>
   );
