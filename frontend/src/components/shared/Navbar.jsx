@@ -4,11 +4,33 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { LogOut, User2 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { BASEURL } from "@/utils/constant";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { setUser } from "@/redux/authSlice";
 
 function Navbar() {
-  const {user}=useSelector(store=>store.auth)
-  // const user=false
+  const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const router=useRouter();
+
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${BASEURL}logout`, {
+        withCredentials: true,
+      });
+      router.push("/");
+      if (res.success) {
+        dispatch(setUser(null));
+        router.push("/");
+        toast.success(res.message);
+      }
+    } catch (error) {
+      console.log(error);
+      // toast.error(error.response.message);
+    }
+  };
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
@@ -31,8 +53,12 @@ function Navbar() {
           </ul>
           {!user ? (
             <div className="flex items-center gap-2">
-              <Link href="/login"><Button variant="outline">Login</Button></Link>
-              <Link href="/signup"><Button className="bg-[#7209b7]">Signup</Button></Link>
+              <Link href="/login">
+                <Button variant="outline">Login</Button>
+              </Link>
+              <Link href="/signup">
+                <Button className="bg-[#7209b7]">Signup</Button>
+              </Link>
             </div>
           ) : (
             <Popover>
@@ -62,11 +88,13 @@ function Navbar() {
                 </div>
                 <div className="flex w-fit items-center gap-2 cursor-pointer text-gray-600">
                   <User2 />
-                  <Button variant="link"><Link href="/profile">View profile</Link></Button>
+                  <Button variant="link">
+                    <Link href="/profile">View profile</Link>
+                  </Button>
                 </div>
                 <div className="flex w-fit items-center gap-2 cursor-pointer text-gray-600">
                   <LogOut />
-                  <Button variant="link">Logout</Button>
+                  <Button variant="link" onClick={logoutHandler}>Logout</Button>
                 </div>
               </PopoverContent>
             </Popover>

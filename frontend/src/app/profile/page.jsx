@@ -14,7 +14,7 @@ const page = () => {
 
   const isResume=true
   const user=useSelector(store=>store.auth.user)
-  console.log(user)
+  // console.log(user)
 
   return (
     <div>
@@ -58,10 +58,10 @@ const page = () => {
           {isResume ? (
             <a
               target="blank"
-              href=""
+              href={user?.profile?.resume}
               className="text-blue-500 w-full hover:underline cursor-pointer"
             >
-              RESUME
+              {user?.profile?.resumeOriginalName}
             </a>
           ) : (
             <span>NA</span>

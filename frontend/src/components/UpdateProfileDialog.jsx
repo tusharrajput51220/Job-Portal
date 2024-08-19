@@ -28,7 +28,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     skills: user?.profile?.skills?.map((skill) => skill),
     file: user?.profile?.resume,
   });
-  //   console.log(user, input);
+  // console.log(user);
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -40,10 +40,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     const formData = new FormData();
-    console.log(input);
     formData.append("fullName", input.fullName);
     formData.append("email", input.email);
     formData.append("phoneNumber", input.phoneNumber);
@@ -52,21 +49,18 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     if (input.file) {
       formData.append("file", input.file);
     }
-    console.log(formData);
 
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/v1/profile/update`,
-        {
-          method: "PUT",
-          // body: formData,
-          body: JSON.stringify(input),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      setLoading(true);
+      const response = await fetch(`${BASEURL}profile/update`, {
+        method: "PUT",
+        body: formData,
+        // body: JSON.stringify(input),
+        headers: {
+          // "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
       const data = await response.json();
       if (response.ok) {
         dispatch(setUser(data.user));

@@ -8,7 +8,6 @@ import React from 'react'
 function page({children}) {
   return (
     <div>
-    {/* <Provider store={store}><Navbar /> {children} <Toaster /></Provider> */}
       <HeroSection />
       <CategoryCarousel />
       <LatestJobs />
