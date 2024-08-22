@@ -6,6 +6,7 @@ import store from "@/redux/store";
 import Navbar from "@/components/shared/Navbar";
 import { Toaster } from "sonner";
 import ReduxProvider from "@/redux/redux-provider";
+// import { store } from "@/redux/store";
 
 const inter = Inter({ subsets: ["latin"] });
 

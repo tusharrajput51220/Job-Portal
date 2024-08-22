@@ -24,11 +24,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     fullName: user?.fullName,
     email: user?.email,
     phoneNumber: user?.phoneNumber,
-    bio: user?.bio,
+    bio: user?.profile?.bio,
     skills: user?.profile?.skills?.map((skill) => skill),
-    file: user?.profile?.resume,
+    file: user?.profile?.resumeOriginalName,
   });
-  // console.log(user);
+  console.log(input, user?.profile?.resumeOriginalName);
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -63,7 +63,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       });
       const data = await response.json();
       if (response.ok) {
-        dispatch(setUser(data.user));
+        dispatch(setUser(data.newUser));
         toast.success(data.message);
         setOpen(false);
       } else {
@@ -154,7 +154,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   id="file"
                   name="file"
                   type="file"
-                  //   value={input?.file}
+                  // value={input?.file}
                   onChange={fileChangeHandler}
                   accept="application/pdf"
                   className="col-span-3"

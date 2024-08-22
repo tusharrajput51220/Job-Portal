@@ -14,6 +14,12 @@ export const register = async (req, res) => {
         success: false,
       });
     }
+    const file = req.file;
+    // console.log('first', file)
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    // console.log("cr", cloudResponse)
+
     const user = await User.findOne({ email });
     if (user) {
       res.status(400).json({
@@ -22,16 +28,33 @@ export const register = async (req, res) => {
       });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({
+    const newUser = await User.create({
       fullName,
       email,
       phoneNumber,
       password: hashedPassword,
       role,
+      profile: {
+        profilePhoto: cloudResponse.secure_url,
+      },
     });
 
-    return res.status(201).json({
+    // Generate a token for the newly created user
+    const tokenData = { userId: newUser._id };
+    const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
+      expiresIn: "1d",
+    });
+
+    const cookieOptions = {
+      maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    };
+
+    return res.status(201).cookie("token", token, cookieOptions).json({
       message: "Account created successfully",
+      newUser,
       success: true,
     });
   } catch (err) {
@@ -120,12 +143,12 @@ export const updateProfile = async (req, res) => {
     const { fullName, email, phoneNumber, bio, skills } = req.body;
     // console.log(fullName, email, phoneNumber, bio, skills)
     const file = req.file;
-    // console.log("file:", file)
+    // console.log("file:", file);
 
     const fileUri = getDataUri(file);
-    // console.log("fileUri",fileUri)
+    // console.log("fileUri", fileUri);
     const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-    // console.log("cr", cloudResponse)
+    // console.log("cr", cloudResponse);
 
     let skillsArray;
     if (skills) {

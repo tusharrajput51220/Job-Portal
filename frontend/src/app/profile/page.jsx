@@ -22,7 +22,7 @@ const page = () => {
         <div className="flex justify-between">
           <div className="flex items-center gap-4">
             <Avatar className="h-16 w-16">
-              <AvatarImage src="https://th.bing.com/th/id/OIP.GN1-R3cCXf-sQcQF6Zkt8AHaHa?w=165&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" />
+              <AvatarImage src={user?.profile?.profilePhoto} />
             </Avatar>
             <div>
               <h1 className="font-medium text-xl">{user?.fullName}</h1>

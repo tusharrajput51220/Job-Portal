@@ -14,21 +14,27 @@ function Navbar() {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const router=useRouter();
+  console.log(user)
 
   const logoutHandler = async () => {
     try {
-      const res = await axios.get(`${BASEURL}logout`, {
-        withCredentials: true,
+      const res = await fetch(`${BASEURL}logout`, {
+        method: "Post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       });
-      router.push("/");
-      if (res.success) {
+      const data = await res.json();
+      console.log(data)
+      if (data.success) {
         dispatch(setUser(null));
         router.push("/");
-        toast.success(res.message);
+        toast.success(data.message);
       }
     } catch (error) {
       console.log(error);
-      // toast.error(error.response.message);
+      toast.error(error.data.message);
     }
   };
   return (
@@ -65,7 +71,7 @@ function Navbar() {
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage
-                    src="http://github.com/shadcn.png"
+                    src={user?.profile?.profilePhoto}
                     alt="@shadcn"
                   />
                   {/* <AvatarFallback>CN</AvatarFallback> */}
@@ -75,14 +81,14 @@ function Navbar() {
                 <div className="flex my-2 gap-4 space-y-2">
                   <Avatar className="cursor-pointer">
                     <AvatarImage
-                      src="http://github.com/shadcn.png"
+                      src={user?.profile?.profilePhoto}
                       alt="@shadcn"
                     />
                   </Avatar>
                   <div>
-                    <h4 className="font-medium">Tushar Rajput</h4>
+                    <h4 className="font-medium">{user?.fullName}</h4>
                     <p className="text-sm text-muted-foreground">
-                      lorem start ru dev jalak
+                      {user?.profile?.bio}
                     </p>
                   </div>
                 </div>

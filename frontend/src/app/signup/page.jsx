@@ -9,7 +9,7 @@ import { BASEURL } from "@/utils/constant";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "@/redux/authSlice";
+import { setLoading, setUser } from "@/redux/authSlice";
 import { Loader2 } from "lucide-react";
 
 function Signup() {
@@ -21,7 +21,7 @@ function Signup() {
     role: "",
     file: "",
   });
-  const router=useRouter()
+  const router = useRouter();
   const dispatch = useDispatch();
   const { loading } = useSelector((store) => store.auth);
   const changeEvent = (e) => {
@@ -32,23 +32,35 @@ function Signup() {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    // console.log(input)
+    // console.log(input);
+    const formData = new FormData();
+    formData.append("fullName", input.fullName);
+    formData.append("email", input.email);
+    formData.append("phoneNumber", input.phoneNumber);
+    formData.append("password", input.password);
+    formData.append("role", input.role);
+    if (input.file) {
+      formData.append("file", input.file);
+    }
     try {
-      dispatch(setLoading(true))
+      dispatch(setLoading(true));
       let data = await fetch(`${BASEURL}register`, {
         method: "POST",
-        body: JSON.stringify(input),
+        body: formData,
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
         },
+        credentials: "include",
       });
-      data=await data.json()
-      toast.success(data.message)
-      router.push("/")
+      data = await data.json();
+      console.log(data)
+      dispatch(setUser(data.newUser))
+      toast.success(data.message);
+      router.push("/");
     } catch (err) {
       console.log(err);
-    }finally{
-      dispatch(setLoading(false))
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
