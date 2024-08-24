@@ -14,7 +14,7 @@ function Navbar() {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const router=useRouter();
-  console.log(user)
+  // console.log(user)
 
   const logoutHandler = async () => {
     try {

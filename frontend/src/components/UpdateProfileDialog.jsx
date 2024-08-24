@@ -28,7 +28,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     skills: user?.profile?.skills?.map((skill) => skill),
     file: user?.profile?.resumeOriginalName,
   });
-  console.log(input, user?.profile?.resumeOriginalName);
+  // console.log(input, user?.profile?.resumeOriginalName);
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
