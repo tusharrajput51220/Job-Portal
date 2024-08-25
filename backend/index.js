@@ -22,7 +22,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Database Connection
-mongoose.connect(mongodb+srv://tusharrajput51220:Esxp2UcwuoGC5fFD@cluster0.cjyuatb.mongodb.net/);
+mongoose.connect('mongodb+srv://tusharrajput51220:Esxp2UcwuoGC5fFD@cluster0.cjyuatb.mongodb.net/');
 
 // Main Routes
 app.use("/api/v1", router);
