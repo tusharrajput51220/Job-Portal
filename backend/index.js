@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 // CORS Configuration
 const corsOptions = {
-  origin: "http://localhost:3000", // Replace with your frontend URL
+  origin: "https://job-portal-omega-five.vercel.app/", // Replace with your frontend URL
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 app.use(cors(corsOptions));
