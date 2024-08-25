@@ -29,7 +29,7 @@ app.use("/api/v1", router);
 
 // Simple GET API
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the Job Portal API!" });
+  res.json("Hello");
 });
 
 // Server Start
