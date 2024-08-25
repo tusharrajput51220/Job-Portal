@@ -4,10 +4,10 @@ import Footer from '@/components/shared/Footer'
 import HeroSection from '@/components/HeroSection'
 import LatestJobs from '@/components/LatestJobs'
 import React from 'react'
-import useGetAllJobs from '@/hooks/useGetAllJobs'
+import UseGetAllJobs from '@/hooks/useGetAllJobs'
 
 function page({children}) {
-  useGetAllJobs()
+  UseGetAllJobs()
   return (
     <div>
       <HeroSection />

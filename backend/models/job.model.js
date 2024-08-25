@@ -41,10 +41,12 @@ const jobSchema = new Schema(
       ref: "Company",
       required: true,
     },
-    applications: {
-      type: Schema.Types.ObjectId,
-      ref: "Application",
-    },
+    applications: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Application",
+      },
+    ],
     created_by: {
       type: Schema.Types.ObjectId,
       ref: "User",

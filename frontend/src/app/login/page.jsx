@@ -115,7 +115,7 @@ function Login() {
           </Button>
         )}
         <span className="text-sm">
-          Don't have an account?{" "}
+          Dont have an account?{" "}
           <Link href="/signup" className="underline text-blue-500">
             Signup
           </Link>

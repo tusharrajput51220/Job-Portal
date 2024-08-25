@@ -9,7 +9,7 @@ import { Contact, Mail, Pen } from "lucide-react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-const page = () => {
+const Page = () => {
   const [open, setOpen]=useState(false)
 
   const isResume=true
@@ -77,4 +77,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

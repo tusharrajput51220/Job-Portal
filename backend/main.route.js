@@ -28,7 +28,7 @@ router.get("/allJobs",isAuthenticated, getAllJobs)
 router.get("/jobById/:id",isAuthenticated, getJobById)
 router.get("/adminJob",isAuthenticated,getAdminJobs)
 
-// ----------------------------Job----------------------------
+// ----------------------------Application----------------------------
 router.post("/apply/:id",isAuthenticated, applyJob)
 router.get("/getJobs",isAuthenticated, getAppliedJobs)
 router.get("/:id/applicants",isAuthenticated, getApplicants)

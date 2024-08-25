@@ -4,8 +4,9 @@ import { BASEURL } from "@/utils/constant";
 import { useDispatch } from "react-redux";
 import { setAllJobs } from "@/redux/jobSlice";
 
-const useGetAllJobs = () => {
+const UseGetAllJobs = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchAllJobs = async () => {
       try {
@@ -18,7 +19,7 @@ const useGetAllJobs = () => {
       }
     };
     fetchAllJobs();
-  }, []);
+  }, [dispatch]); // Added 'dispatch' to the dependency array
 };
 
-export default useGetAllJobs;
+export default UseGetAllJobs;
