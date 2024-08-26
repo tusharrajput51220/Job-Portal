@@ -13,7 +13,7 @@ import { setUser } from "@/redux/authSlice";
 function Navbar() {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
-  const router=useRouter();
+  const router = useRouter();
   // console.log(user)
 
   const logoutHandler = async () => {
@@ -26,7 +26,7 @@ function Navbar() {
         credentials: "include",
       });
       const data = await res.json();
-      console.log(data)
+      console.log(data);
       if (data.success) {
         dispatch(setUser(null));
         router.push("/");
@@ -47,15 +47,28 @@ function Navbar() {
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/jobs">Jobs</Link>
-            </li>
-            <li>
-              <Link href="/browse">Browse</Link>
-            </li>
+            {user && user.role == "recruiter" ? (
+              <>
+                <li>
+                  <Link href="/admin/companies">Companies</Link>
+                </li>
+                <li>
+                  <Link href="/admin/jobs">Jobs</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link href="/">Home</Link>
+                </li>
+                <li>
+                  <Link href="/jobs">Jobs</Link>
+                </li>
+                <li>
+                  <Link href="/browse">Browse</Link>
+                </li>
+              </>
+            )}
           </ul>
           {!user ? (
             <div className="flex items-center gap-2">
@@ -92,15 +105,19 @@ function Navbar() {
                     </p>
                   </div>
                 </div>
-                <div className="flex w-fit items-center gap-2 cursor-pointer text-gray-600">
-                  <User2 />
-                  <Button variant="link">
-                    <Link href="/profile">View profile</Link>
-                  </Button>
-                </div>
+                {user && user.role == "student" && (
+                  <div className="flex w-fit items-center gap-2 cursor-pointer text-gray-600">
+                    <User2 />
+                    <Button variant="link">
+                      <Link href="/profile">View profile</Link>
+                    </Button>
+                  </div>
+                )}
                 <div className="flex w-fit items-center gap-2 cursor-pointer text-gray-600">
                   <LogOut />
-                  <Button variant="link" onClick={logoutHandler}>Logout</Button>
+                  <Button variant="link" onClick={logoutHandler}>
+                    Logout
+                  </Button>
                 </div>
               </PopoverContent>
             </Popover>

@@ -5,6 +5,8 @@ import HeroSection from '@/components/HeroSection';
 import LatestJobs from '@/components/LatestJobs';
 import React, { useEffect, useState } from 'react';
 import UseGetAllJobs from '@/hooks/useGetAllJobs';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 function Page() {
   UseGetAllJobs()
@@ -21,6 +23,13 @@ function Page() {
 
     fetchJobs();
   }, []);
+  const {user}=useSelector(store=>store.auth)
+  const router=useRouter()
+  useEffect(() => {
+    if(user.role=="recruiter"){
+      router.push("/admin/companies")
+    }
+  })
 
   return (
     <div>
