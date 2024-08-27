@@ -10,19 +10,19 @@ import { useRouter } from 'next/navigation';
 
 function Page() {
   UseGetAllJobs()
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`);
-        const jobsData = await response.json();
-        return jobsData;
-      } catch (error) {
-        console.error("Failed to fetch jobs:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchJobs = async () => {
+  //     try {
+  //       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`);
+  //       const jobsData = await response.json();
+  //       return jobsData;
+  //     } catch (error) {
+  //       console.error("Failed to fetch jobs:", error);
+  //     }
+  //   };
 
-    fetchJobs();
-  }, []);
+  //   fetchJobs();
+  // }, []);
   const {user}=useSelector(store=>store.auth)
   const router=useRouter()
   useEffect(() => {

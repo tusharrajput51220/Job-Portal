@@ -34,7 +34,6 @@ function Navbar() {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.data.message);
     }
   };
   return (
