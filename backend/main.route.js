@@ -18,9 +18,9 @@ router.get("/user/:name", getUserByName)
 
 // ----------------------------Company----------------------------
 router.post("/registerCompany",isAuthenticated, registerCompany)
-router.get("/companyByUserId",isAuthenticated, getCompany)
+router.get("/getAllCompanies",isAuthenticated, getCompany)
 router.get("/companyByCompanyId/:id",isAuthenticated, getCompanyById)
-router.put("/companyUpdate/:id",isAuthenticated,updateCompany)
+router.put("/companyUpdate/:id",isAuthenticated,singleUpload,updateCompany)
 
 // ----------------------------Job----------------------------
 router.post("/registerJob",isAuthenticated, postJob)

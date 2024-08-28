@@ -26,7 +26,7 @@ function Page() {
   const {user}=useSelector(store=>store.auth)
   const router=useRouter()
   useEffect(() => {
-    if(user.role=="recruiter"){
+    if(user?.role=="recruiter"){
       router.push("/admin/companies")
     }
   })

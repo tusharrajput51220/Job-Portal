@@ -14,17 +14,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// const corsOptions = {
-//   origin: "http://localhost:3000", 
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: process.env.CLIENT_URL || "http://localhost:3000", 
+  credentials: true,
+};
 app.use(cors(corsOptions));
 
-// Main Routes
 app.use("/api/v1", router);
+app.get("/", (req,res)=>{
+  res.json("Hello")
+})
 
 const port = process.env.PORT || 8000;
-app.listen(port, () => {
-  connectDB();
-  console.log(`App is listening on port ${port}`);
+app.listen(port, async () => {
+  // connectDB();
+  try {
+    await mongoose.connect('mongodb+srv://tusharrajput51220:Esxp2UcwuoGC5fFD@cluster0.cjyuatb.mongodb.net/');
+    console.log("MongoDB connected");
+    console.log(`App is listening on port ${port}`);
+  } catch (err) {
+    console.log(err);
+  }
+  // console.log(`App is listening on port ${port}`);
 });

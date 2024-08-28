@@ -3,19 +3,21 @@
 import CompaniesTable from "@/components/admin/CompaniesTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import UseGetAllCompanies from "@/hooks/useGetAllCompanies";
+import { setSearchCompanyByText } from "@/redux/companySlice";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 const Companies = () => {
-  // useGetAllCompanies();
+  UseGetAllCompanies();
   const [input, setInput] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // useEffect(()=>{
-  //     dispatch(setSearchCompanyByText(input));
-  // },[input]);
+  useEffect(()=>{
+      dispatch(setSearchCompanyByText(input));
+  },[input]);
   return (
     <div>
       <div className="max-w-6xl mx-auto my-10">
