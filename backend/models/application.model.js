@@ -10,16 +10,14 @@ const applicationSchema = new Schema(
     },
     applicant: {
       type: Schema.Types.ObjectId,
-      ref: "USer",
+      ref: "User",
       required: true,
     },
-    status: [
-      {
-        type: String,
-        enum: ["pending", "accepted", "rejected"],
-        default: "pending",
-      },
-    ],
+    status: {
+      type: String,
+      enum: ["pending", "accepted", "rejected"],
+      default: "pending",
+    },
   },
   { timestamps: true }
 );

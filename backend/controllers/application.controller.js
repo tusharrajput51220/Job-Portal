@@ -33,6 +33,7 @@ export const applyJob = async (req, res) => {
         const newApplication = await Application.create({
             job:jobId,
             applicant:userId,
+            status:"pending",
         });
 
         job.applications.push(newApplication._id);

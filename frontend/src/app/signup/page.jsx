@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BASEURL } from "@/utils/constant";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -23,7 +23,7 @@ function Signup() {
   });
   const router = useRouter();
   const dispatch = useDispatch();
-  const { loading } = useSelector((store) => store.auth);
+  const { loading,user } = useSelector((store) => store.auth);
   const changeEvent = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -63,6 +63,11 @@ function Signup() {
       dispatch(setLoading(false));
     }
   };
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <div className="flex items-center justify-center max-w-7xl mx-auto">

@@ -30,7 +30,7 @@ function Job({ job }) {
       <div className="flex items-center gap-2 my-2">
         <Button>
           <Avatar>
-            <AvatarImage src="https://th.bing.com/th/id/OIP.GN1-R3cCXf-sQcQF6Zkt8AHaHa?w=165&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" />
+            <AvatarImage src={job?.company?.logo} />
           </Avatar>
         </Button>
         <div>

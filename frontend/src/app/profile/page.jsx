@@ -5,11 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import UpdateProfileDialog from "@/components/UpdateProfileDialog";
+import UseGetAppliedJobs from "@/hooks/useGetAppliedJob";
 import { Contact, Mail, Pen } from "lucide-react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const Page = () => {
+  UseGetAppliedJobs()
   const [open, setOpen]=useState(false)
 
   const isResume=true

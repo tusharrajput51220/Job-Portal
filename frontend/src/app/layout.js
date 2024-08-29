@@ -6,6 +6,7 @@ import store from "@/redux/store";
 import Navbar from "@/components/shared/Navbar";
 import { Toaster } from "sonner";
 import ReduxProvider from "@/redux/redux-provider";
+import ProtectedRoute from "@/components/admin/ProtectedRoute";
 // import { store } from "@/redux/store";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,7 +20,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReduxProvider store={store}><Navbar /> {children} <Toaster /></ReduxProvider>
+        <ReduxProvider store={store}>
+          <ProtectedRoute>
+            <Navbar /> {children} <Toaster />
+          </ProtectedRoute>
+        </ReduxProvider>
       </body>
     </html>
   );
