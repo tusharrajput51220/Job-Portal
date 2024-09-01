@@ -23,7 +23,7 @@ app.use(cors(corsOptions));
 app.use("/api/v1", router);
 
 app.get("*", (req,res)=>{
-  res.json("Hello")
+  res.json("Hello buddy")
 })
 
 const port = process.env.PORT || 8000;
