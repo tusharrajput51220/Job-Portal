@@ -16,7 +16,6 @@ import { useRouter } from "next/navigation";
 
 const AdminJobsTable = () => {
   const { allAdminJobs, searchJobByText } = useSelector((store) => store.job);
-  // console.log(allAdminJobs, searchJobByText);
 
   const [filterJobs, setFilterJobs] = useState(allAdminJobs);
   const router = useRouter();
@@ -33,7 +32,7 @@ const AdminJobsTable = () => {
     });
     setFilterJobs(filteredJobs);
   }, [allAdminJobs, searchJobByText]);
-//   console.log(filterJobs);
+
   return (
     <div>
       <Table>
@@ -48,7 +47,7 @@ const AdminJobsTable = () => {
         </TableHeader>
         <TableBody>
           {filterJobs?.map((job) => (
-            <tr>
+            <TableRow key={job._id}>
               <TableCell>{job?.company?.name}</TableCell>
               <TableCell>{job?.title}</TableCell>
               <TableCell>{job?.createdAt.split("T")[0]}</TableCell>
@@ -77,7 +76,7 @@ const AdminJobsTable = () => {
                   </PopoverContent>
                 </Popover>
               </TableCell>
-            </tr>
+            </TableRow>
           ))}
         </TableBody>
       </Table>

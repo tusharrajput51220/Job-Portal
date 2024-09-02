@@ -17,7 +17,7 @@ const Companies = () => {
 
   useEffect(()=>{
       dispatch(setSearchCompanyByText(input));
-  },[input]);
+  },[input,dispatch]);
   return (
     <div>
       <div className="max-w-6xl mx-auto my-10">

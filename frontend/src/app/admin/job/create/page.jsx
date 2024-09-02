@@ -167,9 +167,9 @@ const Page = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    {companies.map((company) => {
+                    {companies.map((company,index) => {
                       return (
-                        <SelectItem value={company?.name?.toLowerCase()}>
+                        <SelectItem key={index} value={company?.name?.toLowerCase()}>
                           {company.name}
                         </SelectItem>
                       );
