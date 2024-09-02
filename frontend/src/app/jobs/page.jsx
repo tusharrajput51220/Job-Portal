@@ -32,7 +32,7 @@ const Jobs = () => {
           <div className="w-20%">
             <FilterCard />
           </div>
-          {filterJobs.length <= 0 ? (
+          {filterJobs?.length <= 0 ? (
             <span>Job not found</span>
           ) : (
             <div className="flex-1 h-[88vh] overflow-y-auto pb-5">
