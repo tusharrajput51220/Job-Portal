@@ -49,7 +49,7 @@ const Page = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    // console.log(input);
+    console.log(input);
     try {
       setLoading(true);
       let res = await fetch(`${BASEURL}registerJob`, {
@@ -61,6 +61,7 @@ const Page = () => {
         credentials: "include",
       });
       res=await res.json()
+      console.log(res)
       if (res.success) {
         toast.success(res.message);
         router.push("/admin/jobs");

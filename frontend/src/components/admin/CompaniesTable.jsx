@@ -18,7 +18,7 @@ const CompaniesTable = () => {
   const { companies, searchCompanyByText } = useSelector(
     (store) => store.company
   );
-  console.log(companies, searchCompanyByText)
+  // console.log(companies, searchCompanyByText)
   const [filterCompany, setFilterCompany] = useState(companies);
   const router = useRouter();
   useEffect(() => {
@@ -34,6 +34,7 @@ const CompaniesTable = () => {
       });
     setFilterCompany(filteredCompany);
   }, [companies, searchCompanyByText]);
+  console.log(filterCompany)
   return (
     <div>
       <Table>
@@ -47,8 +48,9 @@ const CompaniesTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filterCompany?.map((company) => (
-            <TableRow key={job._id}>
+          {filterCompany?.length >0 && filterCompany?.map((company, index) => (
+            // <TableRow key={job?._id}>
+            <TableRow key={index}>
               <TableCell>
                 <Avatar>
                   <AvatarImage src={company.logo} />

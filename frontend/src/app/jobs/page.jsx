@@ -8,6 +8,7 @@ import Job from "@/components/Job";
 
 const Jobs = () => {
   const { allJobs, searchedQuery } = useSelector((store) => store.job);
+  console.log(allJobs, searchedQuery )
   const [filterJobs, setFilterJobs] = useState(allJobs);
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const Jobs = () => {
           ) : (
             <div className="flex-1 h-[88vh] overflow-y-auto pb-5">
               <div className="grid grid-cols-3 gap-4">
-                {filterJobs.map((job) => (
+                {filterJobs?.map((job) => (
                   <motion.div
                     initial={{ opacity: 0, x: 100 }}
                     animate={{ opacity: 1, x: 0 }}

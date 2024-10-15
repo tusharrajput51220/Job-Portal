@@ -32,7 +32,7 @@ const AdminJobsTable = () => {
     });
     setFilterJobs(filteredJobs);
   }, [allAdminJobs, searchJobByText]);
-
+  console.log(filterJobs)
   return (
     <div>
       <Table>

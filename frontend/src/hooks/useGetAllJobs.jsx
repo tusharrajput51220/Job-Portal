@@ -7,6 +7,7 @@ import { setAllJobs } from "@/redux/jobSlice";
 const UseGetAllJobs = () => {
   const dispatch = useDispatch();
   const { searchedQuery } = useSelector((store) => store.job);
+  console.log(searchedQuery)
   useEffect(() => {
     const fetchAllJobs = async () => {
       try {

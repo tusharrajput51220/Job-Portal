@@ -12,7 +12,7 @@ const UseGetAllAdminJobs = () => {
           credentials: "include",
         });
         res = await res.json();
-        // console.log(res)
+        console.log(res)
         if (res.success) {
           dispatch(setAllAdminJobs(res.jobs));
         }
