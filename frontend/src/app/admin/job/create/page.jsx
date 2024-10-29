@@ -51,12 +51,14 @@ const Page = () => {
     e.preventDefault();
     console.log(input);
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
       let res = await fetch(`${BASEURL}registerJob`, {
         method: "Post",
         body: JSON.stringify(input),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
       });

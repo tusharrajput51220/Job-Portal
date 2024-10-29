@@ -20,11 +20,13 @@ const CompanyCreate = () => {
   const registerNewCompany = async () => {
     console.log(companyName);
     try {
+      const token = localStorage.getItem("accessToken");
       let response = await fetch(`${BASEURL}registerCompany`, {
         method: "POST",
         body: JSON.stringify({ companyName: companyName }),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
       });

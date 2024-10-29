@@ -25,8 +25,13 @@ const Page = () => {
   useEffect(() => {
     const fetchAllJobs = async () => {
       try {
+        const token = localStorage.getItem("accessToken");
         let res = await fetch(`${BASEURL}jobById/${jobId}`, {
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         });
         res = await res.json();
         dispatch(setSingleJob(res.job));
@@ -44,9 +49,14 @@ const Page = () => {
 
   const applyJobHandler = async () => {
     try {
+      const token = localStorage.getItem("accessToken");
       let res = await fetch(`${BASEURL}apply/${jobId}`, {
         method: "Post",
         credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
       res = await res.json();
       setIsApplied(true);

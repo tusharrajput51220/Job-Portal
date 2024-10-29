@@ -14,9 +14,14 @@ const Applicants = () => {
 
   useEffect(() => {
     const fetchAllApplicants = async () => {
+      const token = localStorage.getItem("accessToken");
       try {
         let res = await fetch(`${BASEURL}${params.id}/applicants`, {
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         });
         res = await res.json();
         // console.log(res);

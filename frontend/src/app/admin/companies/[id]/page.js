@@ -46,12 +46,14 @@ const CompanySetup = () => {
       formData.append("file", input.file);
     }
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
       let data = await fetch(`${BASEURL}companyUpdate/${params?.id}`, {
         method: "Put",
         body: formData,
         headers: {
           // "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
       });

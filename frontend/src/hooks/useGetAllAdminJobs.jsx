@@ -7,9 +7,14 @@ const UseGetAllAdminJobs = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchAllAdminJobs = async () => {
+      const token = localStorage.getItem("accessToken");
       try {
         let res = await fetch(`${BASEURL}adminJob`, {
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         });
         res = await res.json();
         console.log(res)

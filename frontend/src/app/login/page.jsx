@@ -26,10 +26,10 @@ function Login() {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    // console.log(input);
+  
     try {
       dispatch(setLoading(true));
-      let data = await fetch(`${BASEURL}login`, {
+      let response = await fetch(`${BASEURL}login`, {
         method: "POST",
         body: JSON.stringify(input),
         headers: {
@@ -37,16 +37,27 @@ function Login() {
         },
         credentials: "include",
       });
-      data = await data.json();
-      toast.success(data.message);
-      dispatch(setUser(data.user));
-      router.push("/");
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        // Store the token in localStorage
+        localStorage.setItem("accessToken", data.token);
+  
+        toast.success(data.message);
+        dispatch(setUser(data.user));
+        router.push("/");
+      } else {
+        toast.error(data.message || "Login failed");
+      }
     } catch (err) {
       console.log(err);
+      toast.error("An error occurred");
     } finally {
       dispatch(setLoading(false));
     }
   };
+  
   useEffect(() => {
     if (user) {
       router.push("/");

@@ -22,10 +22,12 @@ const ApplicantsTable = () => {
 
   const statusHandler = async (status, id) => {
     try {
+      const token = localStorage.getItem("accessToken");
       const res = await fetch(`${BASEURL}/status/${id}/update`, {
         method: "Put",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ status }),
         credentials: "include",

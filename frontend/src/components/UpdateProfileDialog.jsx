@@ -52,12 +52,14 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
     try {
       setLoading(true);
+      const token = localStorage.getItem("accessToken");
       const response = await fetch(`${BASEURL}profile/update`, {
         method: "PUT",
         body: formData,
         // body: JSON.stringify(input),
         headers: {
           // "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
       });

@@ -14,28 +14,38 @@ function Navbar() {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const router = useRouter();
-  // console.log(user)
-
+ 
   const logoutHandler = async () => {
     try {
+      const token = localStorage.getItem("accessToken"); // Fetch the access token from localStorage
+  
       const res = await fetch(`${BASEURL}logout`, {
-        method: "Post",
+        method: "POST", // Ensure the method is POST (note the uppercase)
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
         },
-        credentials: "include",
+        credentials: "include", // Include credentials for cross-origin requests if needed
       });
+  
       const data = await res.json();
       console.log(data);
+  
       if (data.success) {
-        dispatch(setUser(null));
-        router.push("/");
+        // Clear the token from localStorage
+        localStorage.removeItem("accessToken");
+        dispatch(setUser(null)); // Reset user state
+        router.push("/"); // Redirect to the home page
         toast.success(data.message);
+      } else {
+        toast.error(data.message || "Logout failed");
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error during logout:", error);
+      toast.error("An error occurred during logout");
     }
   };
+  
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
